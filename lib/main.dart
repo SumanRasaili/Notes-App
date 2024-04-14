@@ -4,8 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:notesapp/config/color_schemes.dart';
 import 'package:notesapp/core/shared_pref.dart';
 import 'package:notesapp/firebase_options.dart';
+import 'package:notesapp/splash_screen.dart';
 import 'package:notesapp/theme_prov/theme_provider.dart';
-import 'package:notesapp/ui/home/view/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +27,7 @@ class MyApp extends ConsumerWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: thememode,
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }
