@@ -13,10 +13,9 @@ class NoteListWidget extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.all(15),
-      decoration:
-          BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-            border: Border.all(color: Colors.grey.shade300)),
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          border: Border.all(color: Colors.grey.shade300)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

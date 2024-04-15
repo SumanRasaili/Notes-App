@@ -5,6 +5,7 @@ import 'package:notesapp/components/custom_button.dart';
 import 'package:notesapp/components/custom_textfield.dart';
 import 'package:notesapp/sign_up_screen.dart';
 import 'package:notesapp/ui/home/view/home_page.dart';
+import 'package:notesapp/utils/validation.dart';
 
 class LoginScreen extends HookConsumerWidget {
   const LoginScreen({super.key});
@@ -29,6 +30,9 @@ class LoginScreen extends HookConsumerWidget {
             ),
             CustomTextField(
               labelText: "Email",
+              
+              validator: (p0) => Validators.isRequired(p0),
+              showRequired: true,
               controller: emailController,
               hintText: "Enter email here",
             ),
@@ -38,6 +42,8 @@ class LoginScreen extends HookConsumerWidget {
             CustomTextField(
               controller: passwordController,
               labelText: "Password",
+              validator: (p0) => Validators.isRequired(p0),
+              showRequired: true,
               hintText: "Enter password here",
             ),
             const SizedBox(

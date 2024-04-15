@@ -74,6 +74,10 @@ ThemeData lightTheme = ThemeData(
       centerTitle: true,
       color: Colors.white,
     ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: lightColorScheme.primary,
+      foregroundColor: Colors.white,
+    ),
     colorScheme: lightColorScheme,
     useMaterial3: true);
 
@@ -81,6 +85,10 @@ ThemeData darkTheme = ThemeData(
     appBarTheme: const AppBarTheme(
       centerTitle: true,
       color: Colors.black,
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: lightColorScheme.primary,
+      foregroundColor: Colors.white,
     ),
     colorScheme: darkColorScheme,
     fontFamily: "Open Sans",
