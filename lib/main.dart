@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -25,7 +26,9 @@ class MyApp extends ConsumerWidget {
       title: 'Notes App',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
+      builder: BotToastInit(),
       darkTheme: darkTheme,
+      navigatorObservers: [BotToastNavigatorObserver()],
       themeMode: thememode,
       home: const SplashScreen(),
     );

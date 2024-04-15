@@ -5,6 +5,7 @@ import 'package:notesapp/components/custom_button.dart';
 import 'package:notesapp/components/custom_textfield.dart';
 import 'package:notesapp/splash_screen.dart';
 import 'package:notesapp/theme_prov/theme_provider.dart';
+import 'package:notesapp/ui/auth/repository/auth_repository.dart';
 import 'package:notesapp/ui/home/model/note_models.dart';
 import 'package:notesapp/ui/home/widgets/note_list.dart';
 import 'package:notesapp/utils/validation.dart';
@@ -37,8 +38,6 @@ class HomeScreen extends HookConsumerWidget {
                 scrollable: true,
                 insetPadding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 120),
-                // shape: const RoundedRectangleBorder(
-                //     borderRadius: BorderRadius.all(Radius.circular(10.0))),
                 contentPadding: EdgeInsets.zero,
                 content: Builder(
                   builder: (context) {
@@ -98,8 +97,9 @@ class HomeScreen extends HookConsumerWidget {
                   : const Icon(Icons.dark_mode)),
           IconButton(
               onPressed: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const SplashScreen()));
+                ref.read(authProvider).signOutUser().then((value) =>
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const SplashScreen())));
               },
               icon: const Icon(Icons.logout))
         ],

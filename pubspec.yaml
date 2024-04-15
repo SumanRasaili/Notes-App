@@ -19,6 +19,7 @@ dependencies:
   dio: ^5.4.2+1  
   shared_preferences: ^2.2.3
   flutter_hooks: ^0.20.5
+  firebase_auth: ^4.19.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
