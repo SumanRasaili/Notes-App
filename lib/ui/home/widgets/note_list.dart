@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notesapp/ui/home/model/note_models.dart';
 
 class NoteListWidget extends StatelessWidget {
-  final NotesModel note;
+  final NotesModel? note;
   const NoteListWidget({
     required this.note,
     super.key,
@@ -22,7 +22,7 @@ class NoteListWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(note.title,
+              Text(note?.title ?? "-",
                   style: const TextStyle(
                       fontSize: 14, fontWeight: FontWeight.w400)),
               const Icon(
@@ -34,13 +34,13 @@ class NoteListWidget extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Text(note.description,
+          Text(note?.description ?? "-",
               style:
                   const TextStyle(fontSize: 12, fontWeight: FontWeight.w400)),
           const SizedBox(
             height: 10,
           ),
-          Text(note.timeStamp,
+          Text(note?.timeStamp ?? "-",
               style:
                   const TextStyle(fontSize: 12, fontWeight: FontWeight.w400)),
         ],

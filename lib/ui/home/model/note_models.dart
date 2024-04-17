@@ -1,19 +1,23 @@
 class NotesModel {
-  final String title;
-  final String description;
-  final String timeStamp;
+  final String? id;
+  final String? title;
+  final String? description;
+  final String? timeStamp;
   NotesModel({
     required this.title,
+    required this.id,
     required this.description,
     required this.timeStamp,
   });
 
   NotesModel copyWith({
     String? title,
+    String? id,
     String? description,
     String? timeStamp,
   }) {
     return NotesModel(
+      id: id??this.id,
       title: title ?? this.title,
       description: description ?? this.description,
       timeStamp: timeStamp ?? this.timeStamp,
@@ -30,9 +34,10 @@ class NotesModel {
 
   factory NotesModel.fromJson(Map<String, dynamic> map) {
     return NotesModel(
-      title: map['title'] as String,
-      description: map['description'] as String,
-      timeStamp: map['timeStamp'] as String,
+      id: map["id"]??"",
+      title: map['title'] ?? "",
+      description: map['description'] ?? "",
+      timeStamp: map['timeStamp'] ?? "",
     );
   }
 }

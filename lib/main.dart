@@ -6,7 +6,7 @@ import 'package:notesapp/config/color_schemes.dart';
 import 'package:notesapp/core/shared_pref.dart';
 import 'package:notesapp/firebase_options.dart';
 import 'package:notesapp/splash_screen.dart';
-import 'package:notesapp/theme_prov/theme_provider.dart';
+import 'package:notesapp/providers/theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
