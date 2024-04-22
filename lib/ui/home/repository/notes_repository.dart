@@ -54,14 +54,21 @@ class NotesRepository {
         return allNotes;
       });
     } on FirebaseException catch (e) {
-      print(e.toString());
-      print(e);
       BotToast.closeAllLoading();
       CustomBotToast.text(e.message.toString(), isSuccess: false);
     }
   }
 
   Future<void> deleteProduct({required String id}) async {
-    await _firestore.collection(AppConstants.notesCollection).doc(id).delete();
+    CustomBotToast.loading();
+    try {
+      await _firestore
+          .collection(AppConstants.notesCollection)
+          .doc(id)
+          .delete();
+    } on FirebaseException catch (e) {
+      BotToast.closeAllLoading();
+      CustomBotToast.text(e.message.toString(), isSuccess: false);
+    }
   }
 }
