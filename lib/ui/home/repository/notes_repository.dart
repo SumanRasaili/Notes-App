@@ -41,6 +41,30 @@ class NotesRepository {
     }
   }
 
+  Future<void> editProduct(NotesModel model, BuildContext context) async {
+    final notesjson = {
+      "id": model.id,
+      "title": model.title,
+      "description": model.description,
+      "date": model.date,
+      "created_date": DateTime.now()
+    };
+    CustomBotToast.loading();
+    try {
+      await _firestore
+          .collection(AppConstants.notesCollection)
+          .doc(model.id)
+          .update(notesjson)
+          .then((value) {
+        CustomBotToast.text("Edited Successfully", isSuccess: true);
+        Navigator.pop(context);
+      });
+    } on FirebaseException catch (e) {
+      BotToast.closeAllLoading();
+      CustomBotToast.text(e.message.toString(), isSuccess: false);
+    }
+  }
+
   Stream<List<NotesModel>> getNotesList() async* {
     try {
       yield* _firestore
@@ -66,6 +90,7 @@ class NotesRepository {
           .collection(AppConstants.notesCollection)
           .doc(id)
           .delete();
+      BotToast.closeAllLoading();
     } on FirebaseException catch (e) {
       BotToast.closeAllLoading();
       CustomBotToast.text(e.message.toString(), isSuccess: false);

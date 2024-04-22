@@ -65,7 +65,8 @@ class CustomButton extends StatelessWidget {
           : OutlinedButton(
               style: ElevatedButton.styleFrom(
                 elevation: 0.0,
-                // backgroundColor: backgroundColor ?? AppColors.primaryColor,
+                backgroundColor:
+                    backgroundColor ?? Theme.of(context).primaryColor,
                 side: BorderSide(
                     color: backgroundColor ?? Theme.of(context).primaryColor),
                 shape: RoundedRectangleBorder(

@@ -78,6 +78,10 @@ ThemeData lightTheme = ThemeData(
       backgroundColor: lightColorScheme.primary,
       foregroundColor: Colors.white,
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all(lightColorScheme.primary))),
     colorScheme: lightColorScheme,
     useMaterial3: true);
 
@@ -90,6 +94,10 @@ ThemeData darkTheme = ThemeData(
       backgroundColor: lightColorScheme.primary,
       foregroundColor: Colors.white,
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all(lightColorScheme.primary))),
     colorScheme: darkColorScheme,
     fontFamily: "Open Sans",
     useMaterial3: true);

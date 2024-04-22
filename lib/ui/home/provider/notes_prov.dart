@@ -19,7 +19,7 @@ class NotesNotifier extends StateNotifier<Stream<List<NotesModel>>> {
     print("NOtes state is $state");
   }
 
-  Future deleteNote(String id) async {
-    await ref.read(notesRepositoryProvider).deleteProduct(id: id);
+  deleteNote(String id) {
+    ref.read(notesRepositoryProvider).deleteProduct(id: id);
   }
 }
