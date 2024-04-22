@@ -35,7 +35,7 @@ class HomeScreen extends HookConsumerWidget {
               return AlertDialog(
                 scrollable: true,
                 insetPadding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 120),
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
                 contentPadding: EdgeInsets.zero,
                 content: Builder(
                   builder: (context) {
@@ -72,9 +72,10 @@ class HomeScreen extends HookConsumerWidget {
                                   if (formKey.currentState!.validate()) {
                                     var mode = NotesModel(
                                         id: uid.v4(),
+                                        createdDate: DateTime.now(),
                                         title: titleController.text,
                                         description: descriptionController.text,
-                                        timeStamp: DateFormat("yyyy-MM-dd")
+                                        date: DateFormat("yyyy-MM-dd")
                                             .format(DateTime.now()));
                                     ref
                                         .read(notesRepositoryProvider)
@@ -138,8 +139,10 @@ class HomeScreen extends HookConsumerWidget {
                 builder: (context, AsyncSnapshot<List<NotesModel>> snapshot) {
                   var dd = snapshot.data ?? [];
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
+                    return const Center(
+                        child: CircularProgressIndicator.adaptive());
                   } else if (snapshot.hasError) {
+                    print(snapshot.stackTrace);
                     return Center(
                       child: Text(snapshot.error.toString()),
                     ); // Handle errors

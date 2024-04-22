@@ -1,8 +1,9 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:notesapp/components/custom_bot_toast.dart';
 import 'package:notesapp/ui/home/model/note_models.dart';
 import 'package:notesapp/ui/home/provider/notes_prov.dart';
-import 'package:notesapp/ui/home/repository/notes_repository.dart';
 
 class NoteListWidget extends HookConsumerWidget {
   final NotesModel note;
@@ -30,7 +31,14 @@ class NoteListWidget extends HookConsumerWidget {
                       fontSize: 14, fontWeight: FontWeight.w400)),
               GestureDetector(
                 onTap: () {
-                  ref.read(notesProvider.notifier).deleteNote(note.id ?? "");
+                  CustomBotToast.loading();
+
+                  ref
+                      .read(notesProvider.notifier)
+                      .deleteNote(note.id ?? "")
+                      .then((value) {
+                    BotToast.closeAllLoading();
+                  });
                 },
                 child: const Icon(
                   Icons.delete,
@@ -48,7 +56,7 @@ class NoteListWidget extends HookConsumerWidget {
           const SizedBox(
             height: 10,
           ),
-          Text(note.timeStamp ?? "-",
+          Text(note.date ?? "-",
               style:
                   const TextStyle(fontSize: 12, fontWeight: FontWeight.w400)),
         ],

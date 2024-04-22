@@ -22,7 +22,8 @@ class NotesRepository {
       "id": model.id,
       "title": model.title,
       "description": model.description,
-      "date": model.timeStamp,
+      "date": model.date,
+      "created_date": DateTime.now()
     };
     CustomBotToast.loading();
     try {
@@ -53,6 +54,8 @@ class NotesRepository {
         return allNotes;
       });
     } on FirebaseException catch (e) {
+      print(e.toString());
+      print(e);
       BotToast.closeAllLoading();
       CustomBotToast.text(e.message.toString(), isSuccess: false);
     }
