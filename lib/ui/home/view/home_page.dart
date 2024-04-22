@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:notesapp/components/custom_button.dart';
 import 'package:notesapp/components/custom_textfield.dart';
 import 'package:notesapp/providers/theme_provider.dart';
@@ -22,19 +23,9 @@ class HomeScreen extends HookConsumerWidget {
     final timeController = useTextEditingController();
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final thememodes = ref.watch(themeProvider);
-    final dd = ref.watch(notesProvider);
-    List notes = [
-      NotesModel(
-          id: const Uuid().v1(),
-          title: "Food",
-          description: "I have to eat food",
-          timeStamp: "2024-04-14"),
-      NotesModel(
-          id: const Uuid().v1(),
-          title: "Food",
-          description: "I have to eat food",
-          timeStamp: "2024-04-13"),
-    ];
+    var uid = const Uuid();
+    final noteProv = ref.watch(notesProvider);
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -80,13 +71,15 @@ class HomeScreen extends HookConsumerWidget {
                                 onPressed: () {
                                   if (formKey.currentState!.validate()) {
                                     var mode = NotesModel(
-                                        id: const Uuid().v1(),
+                                        id: uid.v4(),
                                         title: titleController.text,
                                         description: descriptionController.text,
-                                        timeStamp: "2024-09-05");
+                                        timeStamp: DateFormat("yyyy-MM-dd")
+                                            .format(DateTime.now()));
                                     ref
                                         .read(notesRepositoryProvider)
                                         .addProduct(mode, context);
+                                    // print(mode.id);
                                   }
                                 },
                                 label: "Save"),
@@ -141,16 +134,12 @@ class HomeScreen extends HookConsumerWidget {
               // ),
 
               StreamBuilder<List<NotesModel>>(
-                stream: dd,
+                stream: noteProv,
                 builder: (context, AsyncSnapshot<List<NotesModel>> snapshot) {
-                  print(snapshot.error);
-                  print(snapshot.data);
+                  var dd = snapshot.data ?? [];
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
-                    print("Errro --- ${snapshot.error}");
-
-                    print("Errro --- ${snapshot.stackTrace}");
                     return Center(
                       child: Text(snapshot.error.toString()),
                     ); // Handle errors
@@ -164,7 +153,7 @@ class HomeScreen extends HookConsumerWidget {
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           return NoteListWidget(
-                            note: snapshot.data?[index],
+                            note: dd[index],
                           );
                         },
                         separatorBuilder: (context, index) {
@@ -172,7 +161,7 @@ class HomeScreen extends HookConsumerWidget {
                             height: 10,
                           );
                         },
-                        itemCount: notes.length);
+                        itemCount: dd.length);
                   }
                 },
               )

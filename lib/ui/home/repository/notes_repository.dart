@@ -19,6 +19,7 @@ class NotesRepository {
 
   Future<void> addProduct(NotesModel model, BuildContext context) async {
     final notesjson = {
+      "id": model.id,
       "title": model.title,
       "description": model.description,
       "date": model.timeStamp,
@@ -27,7 +28,7 @@ class NotesRepository {
     try {
       await _firestore
           .collection(AppConstants.notesCollection)
-          .doc()
+          .doc(model.id)
           .set(notesjson)
           .then((value) {
         CustomBotToast.text("Added Successfully", isSuccess: true);
@@ -45,23 +46,19 @@ class NotesRepository {
           .collection(AppConstants.notesCollection)
           .snapshots()
           .map((event) {
-        print("Event is $event");
         List<NotesModel> allNotes = [];
         for (var doc in event.docs) {
           allNotes.add(NotesModel.fromJson(doc.data()));
         }
-        for (var element in allNotes) {
-          print("Desc is ${element.description}");
-        }
-        print("All Notes is $allNotes");
-        // return event.docs
-        //     .map((doc) => NotesModel.fromJson(doc.data()))
-        //     .toList();
         return allNotes;
       });
     } on FirebaseException catch (e) {
       BotToast.closeAllLoading();
       CustomBotToast.text(e.message.toString(), isSuccess: false);
     }
+  }
+
+  Future<void> deleteProduct({required String id}) async {
+    await _firestore.collection(AppConstants.notesCollection).doc(id).delete();
   }
 }
