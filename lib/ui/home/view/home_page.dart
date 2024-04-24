@@ -1,10 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:notesapp/providers/theme_provider.dart';
-import 'package:notesapp/splash_screen.dart';
 import 'package:notesapp/ui/auth/repository/auth_repository.dart';
 import 'package:notesapp/ui/home/model/note_models.dart';
 import 'package:notesapp/ui/home/provider/notes_prov.dart';
@@ -24,7 +22,6 @@ class HomeScreen extends HookConsumerWidget {
     final thememodes = ref.watch(themeProvider);
     var uid = const Uuid();
     final noteProv = ref.watch(notesProvider);
-    final authProv = ref.watch(authProvider);
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -77,18 +74,58 @@ class HomeScreen extends HookConsumerWidget {
                   : const Icon(Icons.dark_mode)),
           IconButton(
               onPressed: () async {
-                authProv.signOutUser(context, ref);
-                // await FirebaseAuth.instance.signOut().then((value) =>
-                //     Navigator.of(context).pushAndRemoveUntil(
-                //         MaterialPageRoute(builder: (c) => const SplashScreen()),
-                //         (route) => false));
-                // ref.read(authProvider).signOutUser(context, ref);
+                showDialog(
+                    context: context,
+                    builder: (ctx) {
+                      return AlertDialog(
+                        title: Column(
+                          // crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            const Text(
+                              "Are you sure want to logout?",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            ButtonBar(
+                              children: [
+                                FilledButton(
+                                  onPressed: () {
+                                    Navigator.pop(ctx);
+                                  },
+                                  child: const Text("No"),
+                                ),
+                                FilledButton(
+                                  onPressed: () async {
+                                    await ref
+                                        .read(authProvider)
+                                        .signOutUser(ctx, ref);
+
+                                    // ref.invalidate(notesProvider);
+                                    // exit(0);
+                                  },
+                                  child: const Text("YES"),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      );
+                    });
               },
               icon: const Icon(Icons.logout))
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
         child: SingleChildScrollView(
           child: Column(
             children: [

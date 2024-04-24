@@ -7,7 +7,7 @@ import 'package:notesapp/core/shared_pref.dart';
 import 'package:notesapp/firebase_options.dart';
 import 'package:notesapp/providers/theme_provider.dart';
 import 'package:notesapp/splash_screen.dart';
-
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 class Logger extends ProviderObserver {
   @override
   void didUpdateProvider(
@@ -28,13 +28,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await SharedPref.init();
-  runApp(ProviderScope(observers: [Logger()], child: const MyApp()));
+  runApp(ProviderScope(observers: [Logger()], child: Phoenix(child: const MyApp())));
 }
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final thememode = ref.watch(themeProvider);

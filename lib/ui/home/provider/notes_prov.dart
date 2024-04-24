@@ -3,7 +3,8 @@ import 'package:notesapp/ui/home/model/note_models.dart';
 import 'package:notesapp/ui/home/repository/notes_repository.dart';
 
 final notesProvider =
-    StateNotifierProvider<NotesNotifier, Stream<List<NotesModel>>>((ref) {
+    StateNotifierProvider.autoDispose<NotesNotifier, Stream<List<NotesModel>>>(
+        (ref) {
   return NotesNotifier(ref: ref);
 });
 
