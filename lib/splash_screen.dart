@@ -48,10 +48,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     // initializeApp();
   }
 
-  initializeApp() {
-    // final auth = ;
-  }
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(

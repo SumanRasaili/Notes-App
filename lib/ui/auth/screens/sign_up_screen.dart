@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:notesapp/components/custom_button.dart';
 import 'package:notesapp/components/custom_textfield.dart';
+import 'package:notesapp/config/asset_paths.dart';
 import 'package:notesapp/ui/auth/repository/auth_repository.dart';
 import 'package:notesapp/ui/auth/screens/login_screen.dart';
 import 'package:notesapp/utils/validation.dart';
@@ -23,6 +24,10 @@ class SignUpScreen extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Center(child: Image.asset(AssetPaths.notesImage)),
+              const SizedBox(
+                height: 15,
+              ),
               const Text(
                 "Sign up to use Notes App",
                 style: TextStyle(fontSize: 18),

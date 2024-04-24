@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:notesapp/components/custom_bot_toast.dart';
@@ -28,6 +29,8 @@ class NotesRepository {
     CustomBotToast.loading();
     try {
       await _firestore
+          .collection(AppConstants.usersCollection)
+          .doc(FirebaseAuth.instance.currentUser?.uid)
           .collection(AppConstants.notesCollection)
           .doc(model.id)
           .set(notesjson)
@@ -52,6 +55,8 @@ class NotesRepository {
     CustomBotToast.loading();
     try {
       await _firestore
+          .collection(AppConstants.usersCollection)
+          .doc(FirebaseAuth.instance.currentUser?.uid)
           .collection(AppConstants.notesCollection)
           .doc(model.id)
           .update(notesjson)
@@ -68,6 +73,8 @@ class NotesRepository {
   Stream<List<NotesModel>> getNotesList() async* {
     try {
       yield* _firestore
+          .collection(AppConstants.usersCollection)
+          .doc(FirebaseAuth.instance.currentUser?.uid)
           .collection(AppConstants.notesCollection)
           .snapshots()
           .map((event) {
@@ -87,6 +94,8 @@ class NotesRepository {
     CustomBotToast.loading();
     try {
       await _firestore
+          .collection(AppConstants.usersCollection)
+          .doc(FirebaseAuth.instance.currentUser?.uid)
           .collection(AppConstants.notesCollection)
           .doc(id)
           .delete();
