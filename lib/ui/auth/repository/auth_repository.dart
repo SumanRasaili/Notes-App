@@ -13,6 +13,7 @@ final authProvider = Provider<AuthRepository>((ref) {
 class AuthRepository {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
+  Stream<User?> get user => _firebaseAuth.authStateChanges();
   Future<void> login(
       {required String email,
       required String password,
@@ -27,11 +28,10 @@ class AuthRepository {
           "User Logged In Successfully",
           isSuccess: true,
         );
-
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ));
-      });
+      }).then((value) =>
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => const HomeScreen(),
+              )));
     } on FirebaseAuthException catch (e) {
       BotToast.closeAllLoading();
       CustomBotToast.text(

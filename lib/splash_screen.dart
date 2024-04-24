@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:notesapp/ui/auth/repository/auth_repository.dart';
 import 'package:notesapp/ui/auth/screens/login_screen.dart';
+import 'package:notesapp/ui/home/view/home_page.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -12,11 +15,22 @@ class SplashScreen extends ConsumerStatefulWidget {
 class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
+    ref.read(authProvider).user.listen((User? user) {
+      if (user == null) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const LoginScreen(),
+          ),
+        );
+      } else {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+        );
+      }
+    });
     super.initState();
-    Future.delayed(const Duration(seconds: 2)).then(
-        (value) => Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) =>  LoginScreen(),
-            )));
   }
 
   @override

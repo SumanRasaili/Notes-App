@@ -71,7 +71,7 @@ class NoteListWidget extends HookConsumerWidget {
                     },
                     child: Icon(
                       Icons.edit,
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).iconTheme.color,
                     ),
                   ),
                   GestureDetector(

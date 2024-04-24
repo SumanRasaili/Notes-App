@@ -74,12 +74,15 @@ ThemeData lightTheme = ThemeData(
       centerTitle: true,
       color: Colors.white,
     ),
+    // iconTheme: IconThemeData(color: lightColorScheme.primary),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: lightColorScheme.primary,
       foregroundColor: Colors.white,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
+            textStyle: MaterialStateProperty.all(
+                TextStyle(color: lightColorScheme.background)),
             backgroundColor:
                 MaterialStateProperty.all(lightColorScheme.primary))),
     colorScheme: lightColorScheme,
@@ -90,14 +93,18 @@ ThemeData darkTheme = ThemeData(
       centerTitle: true,
       color: Colors.black,
     ),
+
+    // iconTheme: IconThemeData(color: darksColorScheme.background),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: lightColorScheme.primary,
       foregroundColor: Colors.white,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
+            textStyle: MaterialStateProperty.all(
+                TextStyle(color: lightColorScheme.background)),
             backgroundColor:
-                MaterialStateProperty.all(lightColorScheme.primary))),
+                MaterialStateProperty.all(lightColorScheme.background))),
     colorScheme: darkColorScheme,
     fontFamily: "Open Sans",
     useMaterial3: true);
