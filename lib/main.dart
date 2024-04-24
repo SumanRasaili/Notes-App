@@ -5,14 +5,30 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:notesapp/config/color_schemes.dart';
 import 'package:notesapp/core/shared_pref.dart';
 import 'package:notesapp/firebase_options.dart';
-import 'package:notesapp/splash_screen.dart';
 import 'package:notesapp/providers/theme_provider.dart';
+import 'package:notesapp/splash_screen.dart';
+
+class Logger extends ProviderObserver {
+  @override
+  void didUpdateProvider(
+    ProviderBase<Object?> provider,
+    Object? previousValue,
+    Object? newValue,
+    ProviderContainer container,
+  ) {
+    print('''
+{
+  "provider": "${provider.name ?? provider.runtimeType}",
+  "newValue": "$newValue"
+}''');
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await SharedPref.init();
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(ProviderScope(observers: [Logger()], child: const MyApp()));
 }
 
 class MyApp extends ConsumerWidget {

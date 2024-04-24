@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,6 +24,7 @@ class HomeScreen extends HookConsumerWidget {
     final thememodes = ref.watch(themeProvider);
     var uid = const Uuid();
     final noteProv = ref.watch(notesProvider);
+    final authProv = ref.watch(authProvider);
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -74,16 +76,19 @@ class HomeScreen extends HookConsumerWidget {
                   ? const Icon(Icons.light_mode)
                   : const Icon(Icons.dark_mode)),
           IconButton(
-              onPressed: () {
-                ref.read(authProvider).signOutUser().then((value) =>
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const SplashScreen())));
+              onPressed: () async {
+                authProv.signOutUser(context, ref);
+                // await FirebaseAuth.instance.signOut().then((value) =>
+                //     Navigator.of(context).pushAndRemoveUntil(
+                //         MaterialPageRoute(builder: (c) => const SplashScreen()),
+                //         (route) => false));
+                // ref.read(authProvider).signOutUser(context, ref);
               },
               icon: const Icon(Icons.logout))
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -92,7 +97,7 @@ class HomeScreen extends HookConsumerWidget {
               //   onPressed: () {},
               // ),
               // const SizedBox(
-              //   height: 15,
+              //   height: 15,s
               // ),
 
               StreamBuilder<List<NotesModel>>(

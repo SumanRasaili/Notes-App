@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:notesapp/components/custom_bot_toast.dart';
+import 'package:notesapp/splash_screen.dart';
 import 'package:notesapp/ui/auth/screens/login_screen.dart';
 import 'package:notesapp/ui/home/view/home_page.dart';
 
@@ -13,7 +14,7 @@ final authProvider = Provider<AuthRepository>((ref) {
 class AuthRepository {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  Stream<User?> get user => _firebaseAuth.authStateChanges();
+  // Stream<User?> get user => _firebaseAuth.authStateChanges();
   Future<void> login(
       {required String email,
       required String password,
@@ -28,10 +29,12 @@ class AuthRepository {
           "User Logged In Successfully",
           isSuccess: true,
         );
-      }).then((value) =>
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => const HomeScreen(),
-              )));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+            ));
+      });
     } on FirebaseAuthException catch (e) {
       BotToast.closeAllLoading();
       CustomBotToast.text(
@@ -68,7 +71,24 @@ class AuthRepository {
     }
   }
 
-  Future<void> signOutUser() async {
-    await _firebaseAuth.signOut();
+  Future<void> signOutUser(BuildContext context, WidgetRef ref) async {
+    CustomBotToast.loading();
+    try {
+      await _firebaseAuth.signOut().then((value) {
+        BotToast.closeAllLoading();
+        CustomBotToast.text("Signed Out Successfully", isSuccess: true);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (c) => const SplashScreen()),
+            (route) => false);
+      });
+    } on FirebaseAuthException catch (e) {
+      print("The error is $e");
+      print("The error is ${e.stackTrace}");
+      BotToast.closeAllLoading();
+      CustomBotToast.text(
+        e.toString(),
+        isSuccess: false,
+      );
+    }
   }
 }

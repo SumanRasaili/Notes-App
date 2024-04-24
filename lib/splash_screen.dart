@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:notesapp/ui/auth/repository/auth_repository.dart';
 import 'package:notesapp/ui/auth/screens/login_screen.dart';
 import 'package:notesapp/ui/home/view/home_page.dart';
 
@@ -15,22 +14,29 @@ class SplashScreen extends ConsumerStatefulWidget {
 class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
-    ref.read(authProvider).user.listen((User? user) {
+    super.initState();
+    initializeApp();
+  }
+
+  initializeApp() {
+    // final auth = ref.read(authProvider);
+
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => const LoginScreen(),
+            builder: (cc) => const LoginScreen(),
           ),
         );
       } else {
-        Navigator.of(context).pushReplacement(
+        Navigator.pushReplacement(
+          context,
           MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
+            builder: (cc) => const HomeScreen(),
           ),
         );
       }
     });
-    super.initState();
   }
 
   @override
