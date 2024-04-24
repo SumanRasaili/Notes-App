@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:notesapp/config/asset_paths.dart';
 import 'package:notesapp/providers/theme_provider.dart';
 import 'package:notesapp/ui/auth/repository/auth_repository.dart';
 import 'package:notesapp/ui/home/model/note_models.dart';
@@ -108,9 +109,6 @@ class HomeScreen extends HookConsumerWidget {
                                     await ref
                                         .read(authProvider)
                                         .signOutUser(ctx, ref);
-
-                                    // ref.invalidate(notesProvider);
-                                    // exit(0);
                                   },
                                   child: const Text("YES"),
                                 ),
@@ -141,17 +139,48 @@ class HomeScreen extends HookConsumerWidget {
                 stream: noteProv,
                 builder: (context, AsyncSnapshot<List<NotesModel>> snapshot) {
                   var dd = snapshot.data ?? [];
+                  print("--- hasData${!snapshot.hasData}");
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                        child: CircularProgressIndicator.adaptive());
+                    return SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.50,
+                        child: const Center(
+                            child: CircularProgressIndicator.adaptive()));
                   } else if (snapshot.hasError) {
                     print(snapshot.stackTrace);
                     return Center(
                       child: Text(snapshot.error.toString()),
                     ); // Handle errors
-                  } else if (!snapshot.hasData) {
-                    return const Center(
-                      child: Text("No Data"),
+                  } else if (snapshot.data!.isEmpty) {
+                    return SizedBox(
+                      height: (MediaQuery.of(context).size.height -
+                              (kToolbarHeight)) /
+                          1.3,
+                      // MediaQuery.of(context).viewPadding.top,
+
+                      // (MediaQuery.of(context).size.height -
+                      //     kBottomNavigationBarHeight),
+                      child: Center(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(AssetPaths.noDataFound),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                "Oh Hoooo..",
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              const Text(
+                                "PLease add some Plans..",
+                                style: TextStyle(fontSize: 16),
+                              )
+                            ]),
+                      ),
                     ); // Handle the case when there's no data
                   } else {
                     return ListView.separated(
