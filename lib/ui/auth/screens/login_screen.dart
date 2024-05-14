@@ -26,7 +26,10 @@ class LoginScreen extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(child: Image.asset(AssetPaths.notesImage)),
+              Center(
+                  child: Image.asset(
+                AssetPaths.notesImage,
+              )),
               const SizedBox(
                 height: 15,
               ),
@@ -88,9 +91,11 @@ class LoginScreen extends HookConsumerWidget {
                   },
                   child: RichText(
                     textAlign: TextAlign.center,
-                    text: TextSpan(children: [
-                      const TextSpan(
-                          text: "Don't have an Account",
+                    text: TextSpan(text: "Don't have an Account  ", children: [
+                      const WidgetSpan(
+                          alignment: PlaceholderAlignment.baseline,
+                          baseline: TextBaseline.alphabetic,
+                          child: SizedBox(width: 5),
                           style: TextStyle(color: Colors.black)),
                       TextSpan(
                           text: "Sign Up",

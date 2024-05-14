@@ -39,13 +39,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         }
       }
     });
-    // Future.delayed(const Duration(seconds: 2))
-    //     .then((value) => Navigator.of(context).pushReplacement(
-    //           MaterialPageRoute(
-    //             builder: (cc) => const LoginScreen(),
-    //           ),
-    //         ));
-    // initializeApp();
   }
 
   @override
@@ -61,7 +54,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 children: [
                   Center(
                       child: Text(
-                    "Note App",
+                    "Notes App",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   )),
                   SizedBox(

@@ -79,44 +79,24 @@ class HomeScreen extends HookConsumerWidget {
                     context: context,
                     builder: (ctx) {
                       return AlertDialog(
-                        title: Column(
-                          // crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const SizedBox(
-                              height: 20,
+                          content: const Text("Do you really want to LogOut?"),
+                          actions: [
+                            FilledButton(
+                              onPressed: () {
+                                Navigator.pop(ctx);
+                              },
+                              child: const Text("No"),
                             ),
-                            const Text(
-                              "Are you sure want to logout?",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            FilledButton(
+                              onPressed: () async {
+                                await ref
+                                    .read(authProvider)
+                                    .signOutUser(ctx, ref);
+                              },
+                              child: const Text("YES"),
                             ),
-                            const SizedBox(
-                              height: 12,
-                            ),
-                            ButtonBar(
-                              children: [
-                                FilledButton(
-                                  onPressed: () {
-                                    Navigator.pop(ctx);
-                                  },
-                                  child: const Text("No"),
-                                ),
-                                FilledButton(
-                                  onPressed: () async {
-                                    await ref
-                                        .read(authProvider)
-                                        .signOutUser(ctx, ref);
-                                  },
-                                  child: const Text("YES"),
-                                ),
-                              ],
-                            )
                           ],
-                        ),
-                      );
+                          title: const Text("Log Out"));
                     });
               },
               icon: const Icon(Icons.logout))
@@ -127,26 +107,16 @@ class HomeScreen extends HookConsumerWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // TitleRow(
-              //   name: "Today",
-              //   onPressed: () {},
-              // ),
-              // const SizedBox(
-              //   height: 15,s
-              // ),
-
               StreamBuilder<List<NotesModel>>(
                 stream: noteProv,
                 builder: (context, AsyncSnapshot<List<NotesModel>> snapshot) {
                   var dd = snapshot.data ?? [];
-                  print("--- hasData${!snapshot.hasData}");
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return SizedBox(
                         height: MediaQuery.of(context).size.height * 0.50,
                         child: const Center(
                             child: CircularProgressIndicator.adaptive()));
                   } else if (snapshot.hasError) {
-                    print(snapshot.stackTrace);
                     return Center(
                       child: Text(snapshot.error.toString()),
                     ); // Handle errors
@@ -155,28 +125,26 @@ class HomeScreen extends HookConsumerWidget {
                       height: (MediaQuery.of(context).size.height -
                               (kToolbarHeight)) /
                           1.3,
-                      // MediaQuery.of(context).viewPadding.top,
-
-                      // (MediaQuery.of(context).size.height -
-                      //     kBottomNavigationBarHeight),
                       child: Center(
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Image.asset(AssetPaths.noDataFound),
+                              Image.asset(
+                                AssetPaths.noDataFound,
+                              ),
                               const SizedBox(
                                 height: 10,
                               ),
                               const Text(
-                                "Oh Hoooo..",
+                                "Uh Hoooo..",
                                 style: TextStyle(fontSize: 14),
                               ),
                               const SizedBox(
                                 height: 5,
                               ),
                               const Text(
-                                "PLease add some Plans..",
+                                "Please add some Plans..",
                                 style: TextStyle(fontSize: 16),
                               )
                             ]),
