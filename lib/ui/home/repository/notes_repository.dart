@@ -2,6 +2,8 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:notesapp/components/custom_bot_toast.dart';
 import 'package:notesapp/config/constants.dart';
@@ -149,7 +151,8 @@ class NotesRepository {
     }
   }
 
-  Future<void> deleteProduct({required String id}) async {
+  Future<void> deleteProduct(
+      {required String id, required BuildContext context}) async {
     CustomBotToast.loading();
     try {
       await _firestore
@@ -157,7 +160,8 @@ class NotesRepository {
           .doc(FirebaseAuth.instance.currentUser?.uid)
           .collection(AppConstants.notesCollection)
           .doc(id)
-          .delete();
+          .delete()
+          .then((value) => Navigator.pop(context));
       BotToast.closeAllLoading();
     } on FirebaseException catch (e) {
       BotToast.closeAllLoading();

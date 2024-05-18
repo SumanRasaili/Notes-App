@@ -91,10 +91,11 @@ class NoteListWidget extends HookConsumerWidget {
                                     child: const Text("No"),
                                   ),
                                   FilledButton(
-                                    onPressed: () async {
+                                    onPressed: () {
                                       ref
                                           .read(notesProvider.notifier)
-                                          .deleteNote(note.id ?? "");
+                                          .deleteNote(
+                                              id: note.id ?? "", context: ctx);
                                     },
                                     child: const Text("YES"),
                                   ),

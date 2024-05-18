@@ -36,15 +36,15 @@ class TodayNotesWidget extends ConsumerWidget {
               ); // Handle errors
             } else if (dd.isEmpty) {
               return SizedBox(
-                height:
-                    (MediaQuery.of(context).size.height - (kToolbarHeight)) /
-                        1.3,
+                height: 300,
                 child: Center(
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
+                          height: 200,
+                          width: 250,
                           AssetPaths.noDataFound,
                         ),
                         const SizedBox(

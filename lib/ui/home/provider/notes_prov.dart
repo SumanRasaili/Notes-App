@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:notesapp/ui/home/model/note_models.dart';
 import 'package:notesapp/ui/home/repository/notes_repository.dart';
@@ -19,7 +20,7 @@ class NotesNotifier extends StateNotifier<Stream<List<NotesModel>>> {
     state = notes;
   }
 
-  deleteNote(String id) {
-    ref.read(notesRepositoryProvider).deleteProduct(id: id);
+  deleteNote({required String id,required BuildContext context}) {
+    ref.read(notesRepositoryProvider).deleteProduct(id: id,context: context);
   }
 }

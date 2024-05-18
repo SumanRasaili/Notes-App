@@ -58,7 +58,6 @@ class HomeScreen extends HookConsumerWidget {
         ),
       ),
       appBar: AppBar(
-        // elevation: 2,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         centerTitle: false,
         title: const Text(
