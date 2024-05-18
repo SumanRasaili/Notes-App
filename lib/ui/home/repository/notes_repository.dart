@@ -76,6 +76,7 @@ class NotesRepository {
           .collection(AppConstants.usersCollection)
           .doc(FirebaseAuth.instance.currentUser?.uid)
           .collection(AppConstants.notesCollection)
+          .orderBy("created_date", descending: true)
           .snapshots()
           .map((event) {
         List<NotesModel> allNotes = [];

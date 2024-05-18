@@ -14,12 +14,28 @@ class NotesNotifier extends StateNotifier<Stream<List<NotesModel>>> {
   }
   Ref ref;
 
+  List<NotesModel> todayNotesModel = [];
+
   getNotesList() {
     final notes = ref.read(notesRepositoryProvider).getNotesList();
     state = notes;
-    print("NOtes state is $state");
   }
 
+  getTodayNotesList() {
+    var todayYear = DateTime.now().year;
+    var month = DateTime.now().month;
+    var day = DateTime.now().day;
+    var notestream = state;
+    notestream.listen((event) {
+      todayNotesModel = event
+          .where((element) =>
+              element.createdDate?.year == todayYear &&
+              element.createdDate?.day == day &&
+              element.createdDate?.month == month)
+          .toList();
+      print("The today Notes is ${todayNotesModel.first.title}");
+    });
+  }
 
   deleteNote(String id) {
     ref.read(notesRepositoryProvider).deleteProduct(id: id);

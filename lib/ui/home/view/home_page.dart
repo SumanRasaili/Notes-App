@@ -119,6 +119,16 @@ class HomeScreen extends HookConsumerWidget {
                 stream: noteProv,
                 builder: (context, AsyncSnapshot<List<NotesModel>> snapshot) {
                   var dd = snapshot.data ?? [];
+                  // List<NotesModel> todayNotesModel;
+                  // var todayYear = DateTime.now().year;
+                  // var month = DateTime.now().month;
+                  // var day = DateTime.now().day;
+                  // todayNotesModel = dd
+                  //     .where((element) =>
+                  //         element.createdDate?.year == todayYear &&
+                  //         element.createdDate?.day == day &&
+                  //         element.createdDate?.month == month)
+                  //     .toList();
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return SizedBox(
                         height: MediaQuery.of(context).size.height * 0.50,
@@ -161,6 +171,7 @@ class HomeScreen extends HookConsumerWidget {
                   } else {
                     return ListView.separated(
                         shrinkWrap: true,
+                        // reverse: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           return NoteListWidget(
