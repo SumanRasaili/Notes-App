@@ -91,6 +91,64 @@ class NotesRepository {
     }
   }
 
+  Stream<List<NotesModel>> getTodayNotesList() async* {
+    try {
+      yield* _firestore
+          .collection(AppConstants.usersCollection)
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .collection(AppConstants.notesCollection)
+          .orderBy("created_date", descending: true)
+          .snapshots()
+          .map((event) {
+        List<NotesModel> allNotes = [];
+        for (var doc in event.docs) {
+          allNotes.add(NotesModel.fromJson(doc.data()));
+        }
+        List<NotesModel> sortedList = allNotes
+            .where(
+              (element) =>
+                  element.createdDate?.year == DateTime.now().year &&
+                  element.createdDate?.day == DateTime.now().day &&
+                  element.createdDate?.month == DateTime.now().month,
+            )
+            .toList();
+        return sortedList;
+      });
+    } on FirebaseException catch (e) {
+      BotToast.closeAllLoading();
+      CustomBotToast.text(e.message.toString(), isSuccess: false);
+    }
+  }
+
+  Stream<List<NotesModel>> getYesterdayNotesList() async* {
+    try {
+      yield* _firestore
+          .collection(AppConstants.usersCollection)
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .collection(AppConstants.notesCollection)
+          .orderBy("created_date", descending: true)
+          .snapshots()
+          .map((event) {
+        List<NotesModel> allNotes = [];
+        for (var doc in event.docs) {
+          allNotes.add(NotesModel.fromJson(doc.data()));
+        }
+        List<NotesModel> sortedList = allNotes
+            .where(
+              (element) =>
+                  element.createdDate?.year == DateTime.now().year &&
+                  element.createdDate?.day == DateTime.now().day - 1 &&
+                  element.createdDate?.month == DateTime.now().month,
+            )
+            .toList();
+        return sortedList;
+      });
+    } on FirebaseException catch (e) {
+      BotToast.closeAllLoading();
+      CustomBotToast.text(e.message.toString(), isSuccess: false);
+    }
+  }
+
   Future<void> deleteProduct({required String id}) async {
     CustomBotToast.loading();
     try {
