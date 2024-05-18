@@ -16,13 +16,15 @@ class SignUpScreen extends HookConsumerWidget {
     final passwordController = useTextEditingController();
     final formKey = useMemoized(() => GlobalKey<FormState>());
     return Scaffold(
+      // resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20.0,
+        ),
         child: Form(
           key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
+            padding: const EdgeInsets.symmetric(vertical: 100),
             children: [
               Center(child: Image.asset(AssetPaths.notesImage)),
               const SizedBox(

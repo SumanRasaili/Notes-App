@@ -22,9 +22,10 @@ class LoginScreen extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
         child: Form(
           key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
+            padding: const EdgeInsets.symmetric(vertical: 100),
+            // mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
                   child: Image.asset(
@@ -91,18 +92,21 @@ class LoginScreen extends HookConsumerWidget {
                   },
                   child: RichText(
                     textAlign: TextAlign.center,
-                    text: TextSpan(text: "Don't have an Account  ",style:const TextStyle(color: Colors.black), children: [
-                      const WidgetSpan(
-                          alignment: PlaceholderAlignment.baseline,
-                          baseline: TextBaseline.alphabetic,
-                          child: SizedBox(width: 5),
-                          style: TextStyle(color: Colors.black)),
-                      TextSpan(
-                          text: "Sign Up",
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              decoration: TextDecoration.underline)),
-                    ]),
+                    text: TextSpan(
+                        text: "Don't have an Account  ",
+                        style: const TextStyle(color: Colors.black),
+                        children: [
+                          const WidgetSpan(
+                              alignment: PlaceholderAlignment.baseline,
+                              baseline: TextBaseline.alphabetic,
+                              child: SizedBox(width: 5),
+                              style: TextStyle(color: Colors.black)),
+                          TextSpan(
+                              text: "Sign Up",
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  decoration: TextDecoration.underline)),
+                        ]),
                   ),
                 ),
               )
