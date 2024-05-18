@@ -19,6 +19,7 @@ class NoteListWidget extends HookConsumerWidget {
     final titleController = useTextEditingController();
     final descriptionController = useTextEditingController();
     final formKey = useMemoized(() => GlobalKey<FormState>());
+    final dateTimeController = useState<DateTime>(note.date!);
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.all(15),
@@ -43,6 +44,7 @@ class NoteListWidget extends HookConsumerWidget {
                           context: context,
                           builder: (context) {
                             return AddOrEditNotesPage(
+                              dateTime: dateTimeController.value,
                               descriptionController: descriptionController
                                 ..text = note.description ?? "",
                               titleController: titleController
@@ -55,8 +57,7 @@ class NoteListWidget extends HookConsumerWidget {
                                       createdDate: DateTime.now(),
                                       title: titleController.text,
                                       description: descriptionController.text,
-                                      date: DateFormat("yyyy-MM-dd")
-                                          .format(DateTime.now()));
+                                      date: dateTimeController.value);
                                   ref
                                       .read(notesRepositoryProvider)
                                       .editProduct(mode, context)
@@ -76,9 +77,30 @@ class NoteListWidget extends HookConsumerWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      ref
-                          .read(notesProvider.notifier)
-                          .deleteNote(note.id ?? "");
+                      showDialog(
+                          context: context,
+                          builder: (ctx) {
+                            return AlertDialog(
+                                content:
+                                    const Text("Do you really want to Delete?"),
+                                actions: [
+                                  FilledButton(
+                                    onPressed: () {
+                                      Navigator.pop(ctx);
+                                    },
+                                    child: const Text("No"),
+                                  ),
+                                  FilledButton(
+                                    onPressed: () async {
+                                      ref
+                                          .read(notesProvider.notifier)
+                                          .deleteNote(note.id ?? "");
+                                    },
+                                    child: const Text("YES"),
+                                  ),
+                                ],
+                                title: const Text("Delete"));
+                          });
                     },
                     child: const Icon(
                       Icons.delete,
@@ -98,7 +120,7 @@ class NoteListWidget extends HookConsumerWidget {
           const SizedBox(
             height: 10,
           ),
-          Text(note.date ?? "-",
+          Text(DateFormat().format(note.date!),
               style:
                   const TextStyle(fontSize: 12, fontWeight: FontWeight.w400)),
         ],

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:notesapp/config/asset_paths.dart';
 import 'package:notesapp/providers/theme_provider.dart';
 import 'package:notesapp/ui/auth/repository/auth_repository.dart';
@@ -18,7 +17,7 @@ class HomeScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final titleController = useTextEditingController();
     final descriptionController = useTextEditingController();
-    final timeController = useTextEditingController();
+    final timeController = useState<DateTime>(DateTime.now());
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final thememodes = ref.watch(themeProvider);
     var uid = const Uuid();
@@ -31,18 +30,19 @@ class HomeScreen extends HookConsumerWidget {
               context: context,
               builder: (context) {
                 return AddOrEditNotesPage(
+                  dateTime: timeController.value,
                   descriptionController: descriptionController,
                   titleController: titleController,
                   formKey: formKey,
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       var mode = NotesModel(
-                          id: uid.v4(),
-                          createdDate: DateTime.now(),
-                          title: titleController.text,
-                          description: descriptionController.text,
-                          date:
-                              DateFormat("yyyy-MM-dd").format(DateTime.now()));
+                        id: uid.v4(),
+                        createdDate: DateTime.now(),
+                        title: titleController.text,
+                        date: timeController.value,
+                        description: descriptionController.text,
+                      );
                       ref
                           .read(notesRepositoryProvider)
                           .addProduct(mode, context)
@@ -106,7 +106,15 @@ class HomeScreen extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const Text(
+                "Today",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               StreamBuilder<List<NotesModel>>(
                 stream: noteProv,
                 builder: (context, AsyncSnapshot<List<NotesModel>> snapshot) {
@@ -167,7 +175,17 @@ class HomeScreen extends HookConsumerWidget {
                         itemCount: dd.length);
                   }
                 },
-              )
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                "Yesterday",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
             ],
           ),
         ),

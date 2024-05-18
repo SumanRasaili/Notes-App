@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:notesapp/components/custom_button.dart';
+import 'package:notesapp/components/custom_date_time_picker.dart';
 import 'package:notesapp/components/custom_textfield.dart';
 import 'package:notesapp/utils/validation.dart';
 
@@ -9,9 +10,11 @@ class AddOrEditNotesPage extends ConsumerWidget {
   final VoidCallback onPressed;
   final TextEditingController titleController;
   final TextEditingController descriptionController;
-  const AddOrEditNotesPage(
+  DateTime dateTime;
+  AddOrEditNotesPage(
       {required this.onPressed,
       required this.formKey,
+      required this.dateTime,
       required this.titleController,
       required this.descriptionController,
       super.key});
@@ -38,6 +41,17 @@ class AddOrEditNotesPage extends ConsumerWidget {
                     validator: (p0) => Validators.isRequired(p0),
                     hintText: "Enter title here",
                   ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  CustomDatetimePicker(
+                      isRequired: true,
+                      isFilled: false,
+                      labelText: "Date",
+                      onDatePicked: (v) {
+                        dateTime = v!;
+                      },
+                      hintText: "Select Date"),
                   const SizedBox(
                     height: 25,
                   ),

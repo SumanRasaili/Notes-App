@@ -86,20 +86,23 @@ class SignUpScreen extends HookConsumerWidget {
                   },
                   child: RichText(
                     textAlign: TextAlign.center,
-                    text: TextSpan(text: "Already have an Account", children: [
-                      const WidgetSpan(
-                          alignment: PlaceholderAlignment.baseline,
-                          baseline: TextBaseline.alphabetic,
-                          child: SizedBox(
-                            width: 5,
-                          ),
-                          style: TextStyle(color: Colors.black)),
-                      TextSpan(
-                          text: "Login In",
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              decoration: TextDecoration.underline)),
-                    ]),
+                    text: TextSpan(
+                        text: "Already have an Account",
+                        style: const TextStyle(color: Colors.black),
+                        children: [
+                          const WidgetSpan(
+                              alignment: PlaceholderAlignment.baseline,
+                              baseline: TextBaseline.alphabetic,
+                              child: SizedBox(
+                                width: 5,
+                              ),
+                              style: TextStyle(color: Colors.black)),
+                          TextSpan(
+                              text: "Login In",
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  decoration: TextDecoration.underline)),
+                        ]),
                   ),
                 ),
               )

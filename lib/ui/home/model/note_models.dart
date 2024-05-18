@@ -4,7 +4,7 @@ class NotesModel {
   final String? id;
   final String? title;
   final String? description;
-  final String? date;
+  final DateTime? date;
   final DateTime? createdDate;
   NotesModel(
       {required this.title,
@@ -17,7 +17,7 @@ class NotesModel {
       {String? title,
       String? id,
       String? description,
-      String? date,
+      DateTime? date,
       DateTime? createdDate}) {
     return NotesModel(
         id: id ?? this.id,
@@ -42,7 +42,7 @@ class NotesModel {
         id: map["id"] ?? "",
         title: map['title'] ?? "",
         description: map['description'] ?? "",
-        date: map['date'] ?? "",
+        date: (map["date"] as Timestamp).toDate(),
         createdDate: (map["created_date"] as Timestamp).toDate());
   }
 }

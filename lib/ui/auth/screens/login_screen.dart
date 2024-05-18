@@ -91,7 +91,7 @@ class LoginScreen extends HookConsumerWidget {
                   },
                   child: RichText(
                     textAlign: TextAlign.center,
-                    text: TextSpan(text: "Don't have an Account  ", children: [
+                    text: TextSpan(text: "Don't have an Account  ",style:const TextStyle(color: Colors.black), children: [
                       const WidgetSpan(
                           alignment: PlaceholderAlignment.baseline,
                           baseline: TextBaseline.alphabetic,
