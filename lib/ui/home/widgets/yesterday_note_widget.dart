@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:notesapp/config/asset_paths.dart';
 import 'package:notesapp/ui/home/model/note_models.dart';
 import 'package:notesapp/ui/home/repository/notes_repository.dart';
 import 'package:notesapp/ui/home/widgets/note_list.dart';
@@ -23,34 +22,36 @@ class YesterdayNotesWidget extends ConsumerWidget {
             child: Text(snapshot.error.toString()),
           ); // Handle errors
         } else if (snapshot.data!.isEmpty) {
-          return SizedBox(
-            height:
-                (MediaQuery.of(context).size.height - (kToolbarHeight)) / 1.3,
-            child: Center(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      AssetPaths.noDataFound,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Text(
-                      "Uh Hoooo..",
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const Text(
-                      "Please add some Plans..",
-                      style: TextStyle(fontSize: 16),
-                    )
-                  ]),
-            ),
-          ); // Handle the case when there's no data
+          return const SizedBox(
+              // height:
+              //     (MediaQuery.of(context).size.height - (kToolbarHeight)) / 1.3,
+              // child: Center(ch)
+
+              );
+          //     child: Column(
+          //         mainAxisAlignment: MainAxisAlignment.center,
+          //         crossAxisAlignment: CrossAxisAlignment.center,
+          //         children: [
+          //           Image.asset(
+          //             AssetPaths.noDataFound,
+          //           ),
+          //           const SizedBox(
+          //             height: 10,
+          //           ),
+          //           const Text(
+          //             "Uh Hoooo..",
+          //             style: TextStyle(fontSize: 14),
+          //           ),
+          //           const SizedBox(
+          //             height: 5,
+          //           ),
+          //           const Text(
+          //             "Please add some Plans..",
+          //             style: TextStyle(fontSize: 16),
+          //           )
+          //         ]),
+          //   ),
+          // ); // Handle the case when there's no data
         } else {
           return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
