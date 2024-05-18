@@ -19,7 +19,9 @@ class NoteListWidget extends HookConsumerWidget {
     final titleController = useTextEditingController();
     final descriptionController = useTextEditingController();
     final formKey = useMemoized(() => GlobalKey<FormState>());
+    print("Note dattime ${note.date}");
     final dateTimeController = useState<DateTime>(note.date!);
+    print("after Assigning ${dateTimeController.value}");
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.all(15),
