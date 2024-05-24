@@ -24,6 +24,7 @@ dependencies:
   uuid: ^4.4.0
   flutter_phoenix: ^1.1.1
   svg_flutter: ^0.0.1
+  flutter_launcher_icons: ^0.13.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -32,6 +33,11 @@ dev_dependencies:
   riverpod_lint: ^2.3.10   
   riverpod_generator: ^2.4.0   
   build_runner: ^2.4.9
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo_image.png" 
+
 flutter:
   uses-material-design: true
   assets:
