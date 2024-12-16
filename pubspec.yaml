@@ -1,48 +1,50 @@
 name: notesapp
 description: "A new Flutter project."
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.1 <4.0.0'
+  sdk: ">=3.3.1 <4.0.0"
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
-  firebase_core: ^2.29.0 
+  firebase_core: ^3.1.1
   hooks_riverpod: ^2.5.1
   riverpod_annotation: ^2.3.5
   go_router: ^13.2.2
   bot_toast: ^4.1.3
-  cached_network_image: ^3.2.3  
+  cached_network_image: ^3.2.3
   intl: ^0.18.1
-  dio: ^5.4.2+1  
+  dio: ^5.4.2+1
   shared_preferences: ^2.2.3
   flutter_hooks: ^0.20.5
-  firebase_auth: ^4.19.1
-  cloud_firestore: ^4.16.1
+  firebase_auth: ^5.1.1
+  firebase_messaging: ^15.0.2
+  cloud_firestore: ^5.0.2
   uuid: ^4.4.0
   flutter_phoenix: ^1.1.1
   svg_flutter: ^0.0.1
   flutter_launcher_icons: ^0.13.1
+  dhttpd: ^4.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
   custom_lint:
-  riverpod_lint: ^2.3.10   
-  riverpod_generator: ^2.4.0   
+  riverpod_lint: ^2.3.10
+  riverpod_generator: ^2.4.0
   build_runner: ^2.4.9
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/logo_image.png" 
+  image_path: "assets/images/logo_image.png"
 
 flutter:
   uses-material-design: true
   assets:
     - assets/images/
-    
+
   fonts:
     - family: OpenSans
       fonts:

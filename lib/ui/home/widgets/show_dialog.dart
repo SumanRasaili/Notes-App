@@ -21,7 +21,6 @@ class AddOrEditNotesPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print("Date time dialog $dateTime");
     return AlertDialog(
       scrollable: true,
       insetPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),

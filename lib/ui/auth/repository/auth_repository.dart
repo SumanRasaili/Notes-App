@@ -37,6 +37,7 @@ class AuthRepository {
             ));
       });
     } on FirebaseAuthException catch (e) {
+      print("Error is  $e");
       BotToast.closeAllLoading();
       CustomBotToast.text(
         e.toString(),

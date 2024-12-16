@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:notesapp/config/color_schemes.dart';
+import 'package:notesapp/core/fcm_service.dart';
 import 'package:notesapp/core/shared_pref.dart';
 import 'package:notesapp/firebase_options.dart';
 import 'package:notesapp/providers/theme_provider.dart';
@@ -27,7 +28,9 @@ class Logger extends ProviderObserver {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FirebaseMessagingService().initMessaging();
   await SharedPref.init();
   runApp(ProviderScope(
       observers: [Logger()], child: Phoenix(child: const MyApp())));
